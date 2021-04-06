@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IITJ Forum & Help</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="mainContent">
+        <form action="/" method="post">
+            <input class="add_question" type="text" placeholder="What's in your mind" name="newQues">
+            <button type="submit">Submit</button>
+        </form>
+        
+        
+        <% for(var i =0;i<question.length;i++) {%>
+            <p class="question"> <%= question[i] %> </p>
+        <% } %>
+        <p class="question">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat enim, reiciendis explicabo tempore minus, quidem officiis quibusdam suscipit accusantium eum sed maiores perspiciatis voluptatum? Labore velit incidunt aspernatur doloremque animi!. lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas architecto repudiandae, ratione soluta vel voluptatem exercitationem aliquid inventore repellendus facilis assumenda qui, eum expedita. Cum doloribus iure magnam impedit. Esse!</p>
+        <p class="question" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis nemo eveniet voluptate fugit minus iusto ut, rem omnis provident, vero asperiores consequuntur et delectus rerum facilis in. Laudantium, error quia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur illo nam harum adipisci sapiente perferendis, odio eius voluptate deleniti sint ipsam ad modi minima, ut quia, dignissimos iste dolorum quis?</p>
+    </div>
+</body>
+</html>
