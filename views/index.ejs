@@ -13,8 +13,11 @@
             <input class="add_question" type="text" placeholder="What's in your mind" name="newQues">
             <button type="submit">Submit</button>
         </form>
-        
-        
+        <form action="/1" method="get"><button>1</button></form>
+        <form action="/2" method="get"><button>2</button></form>
+        <form action="/3" method="get"><button>3</button></form>
+        <form action="/4" method="get"><button>4</button></form>
+        <form action="/5" method="get"><button>5</button></form>
         <% for(var i =0;i<question.length;i++) {%>
             <p class="question"> <%= question[i] %> </p>
         <% } %>
