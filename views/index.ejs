@@ -10,7 +10,7 @@
 <body>
     <div class="mainContent">
         <form action="/" method="post">
-            <input class="add_question" type="text" placeholder="What's in your mind" name="newQues">
+            <input class="add_question" type="text" placeholder="What's in your mind" name="newQues" required>
             <button type="submit">Submit</button>
         </form>
         <form action="/1" method="get"><button>1</button></form>
@@ -19,8 +19,9 @@
         <form action="/4" method="get"><button>4</button></form>
         <form action="/5" method="get"><button>5</button></form>
         <% for(var i =0;i<question.length;i++) {%>
-            <p class="question"> <%= question[i] %> </p>
+            <p class="question"> <%= question[question.length-i-1].questionText %> </p>
         <% } %>
+        
         <p class="question">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat enim, reiciendis explicabo tempore minus, quidem officiis quibusdam suscipit accusantium eum sed maiores perspiciatis voluptatum? Labore velit incidunt aspernatur doloremque animi!. lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas architecto repudiandae, ratione soluta vel voluptatem exercitationem aliquid inventore repellendus facilis assumenda qui, eum expedita. Cum doloribus iure magnam impedit. Esse!</p>
         <p class="question" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis nemo eveniet voluptate fugit minus iusto ut, rem omnis provident, vero asperiores consequuntur et delectus rerum facilis in. Laudantium, error quia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur illo nam harum adipisci sapiente perferendis, odio eius voluptate deleniti sint ipsam ad modi minima, ut quia, dignissimos iste dolorum quis?</p>
     </div>
