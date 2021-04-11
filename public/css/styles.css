@@ -23,3 +23,7 @@ body{
     margin: 18%;
     border: solid grey 2px;
 }
+
+.comment{
+    background-color: rgb(189, 185, 185);
+}

@@ -16,7 +16,6 @@ const schemaQuestion= new mongoose.Schema({
     comments:[{commentText:String}]
 
 })
-
 const questions = mongoose.model('Question',schemaQuestion);
 
 
@@ -35,7 +34,35 @@ for (let i = 1; i < 6; i++) {
 app.post("/",function (req,res) {
     var newQues=req.body.newQues;
     var q1 = new questions({questionText:newQues})
-    questions.insertMany([q1]);
+    questions.insertMany([q1],function (err) {
+        if(err){console.log(err);}
+        else{ res.redirect("/1");}
+    });
+   
+})
+
+app.post("/comment",function (req,res){
+    var newComment=req.body.commentText;
+    var quesID=req.body.submitComment;
+    console.log(newComment);
+    // questions.find({_id:quesID},function (err,d) {
+    //     let x=d[0].comments;
+    //     console.log(x)
+    //     x.push({comment:newComment});
+    //     console.log(x);
+    //     questions.findByIdAndUpdate(quesID,{comments:x},function (err,docs) {
+    //     if(err){console.log(err)};
+    // })
+    // });
+    questions.findOneAndUpdate(
+        {_id:quesID},
+        {$push : {comments:{commentText:newComment}}},
+        function (e,s) {
+            if(e){console.log(e);}
+            else{console.log("hi",s);}
+        }
+    )
+   
     res.redirect("/1");
 })
 

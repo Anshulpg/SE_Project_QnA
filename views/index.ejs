@@ -20,6 +20,19 @@
         <form action="/5" method="get"><button>5</button></form>
         <% for(var i =0;i<question.length;i++) {%>
             <p class="question"> <%= question[question.length-i-1].questionText %> </p>
+            <form action="/comment" method="post">
+                <div>
+                <input type="text" name="commentText" required  placeholder="Add a comment">
+                <!-- <input type="text" name="justID" value="44" height="0px" width="0px">
+                <input type="checkbox" name="checkbox" value="89127398" onchange="this.form.submit()"> -->
+                <button type="submit" value="<%= question[question.length-i-1]._id %>" name="submitComment">Add</button>
+                </div>
+            </form>
+            <% for(var j=0;j<question[question.length-i-1].comments.length;j++){ %>
+                <p class="comment"> <%= question[question.length-i-1].comments[question[question.length-i-1].comments.length-j-1].commentText %> </p>
+                <hr width="70%">
+            <%}%>
+            
         <% } %>
         
         <p class="question">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat enim, reiciendis explicabo tempore minus, quidem officiis quibusdam suscipit accusantium eum sed maiores perspiciatis voluptatum? Labore velit incidunt aspernatur doloremque animi!. lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas architecto repudiandae, ratione soluta vel voluptatem exercitationem aliquid inventore repellendus facilis assumenda qui, eum expedita. Cum doloribus iure magnam impedit. Esse!</p>
