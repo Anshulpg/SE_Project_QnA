@@ -44,7 +44,7 @@ app.post("/",function (req,res) {
 app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
     var quesID=req.body.submitComment;
-    console.log(newComment);
+    //console.log(newComment);
     // questions.find({_id:quesID},function (err,d) {
     //     let x=d[0].comments;
     //     console.log(x)
@@ -59,11 +59,18 @@ app.post("/comment",function (req,res){
         {$push : {comments:{commentText:newComment}}},
         function (e,s) {
             if(e){console.log(e);}
-            else{console.log("hi",s);}
         }
     )
    
     res.redirect("/1");
 })
+
+
+/********************************************* 404 and inaccesebile things */
+
+app.get("/:anything",function (req,res) {
+    res.redirect('/');
+})
+
 
 app.listen(3000);
