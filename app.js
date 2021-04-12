@@ -68,9 +68,6 @@ app.post("/comment",function (req,res){
 
 /********************************************* 404 and inaccesebile things */
 
-app.get("/:anything",function (req,res) {
-    res.redirect('/');
-})
 
 
 app.listen(3000);
