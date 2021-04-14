@@ -19,6 +19,14 @@ const schemaQuestion= new mongoose.Schema({
 const questions = mongoose.model('Question',schemaQuestion);
 
 
+function min(a,b) {
+    if (a<b){
+        return a;
+    }
+    return b;
+}
+
+
 app.get("/",function (req,res) {
     res.render("home.ejs");
 })
@@ -26,7 +34,10 @@ for (let i = 1; i < 6; i++) {
    
     app.get("/"+String(i),function (req,res) {
         questions.find({},function (err,questionsUploaded) {
-            res.render("index.ejs",{question:questionsUploaded});
+            if(questionsUploaded.length-(i-1)*100>0){
+            res.render("index.ejs",{question:questionsUploaded.slice(-550,),pageNumber:i,pageNum:i,numberOfQues:min(questionsUploaded.length-(i-1)*100,100)});
+            }
+            else{res.render("noQues.ejs")}
         })
         
 })
@@ -36,38 +47,31 @@ app.post("/",function (req,res) {
     var q1 = new questions({questionText:newQues})
     questions.insertMany([q1],function (err) {
         if(err){console.log(err);}
-        else{ res.redirect("/1");}
+        
     });
-   
+   res.redirect('/1');
 })
 
 app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
     var quesID=req.body.submitComment;
-    //console.log(newComment);
-    // questions.find({_id:quesID},function (err,d) {
-    //     let x=d[0].comments;
-    //     console.log(x)
-    //     x.push({comment:newComment});
-    //     console.log(x);
-    //     questions.findByIdAndUpdate(quesID,{comments:x},function (err,docs) {
-    //     if(err){console.log(err)};
-    // })
-    // });
     questions.findOneAndUpdate(
         {_id:quesID},
         {$push : {comments:{commentText:newComment}}},
         function (e,s) {
             if(e){console.log(e);}
+            else{res.redirect('/1');}
         }
     )
-   
-    res.redirect("/1");
+    
+    
 })
-
-
-/********************************************* 404 and inaccesebile things */
-
-
+//////////////******************  only uncomment to add elements in databse for testing  *********** */
+// for (let i = 300; i < 701; i++) {
+//     var aaa=new questions({questionText:i});
+//     questions.insertMany([aaa],function (err) {
+//         console.log(err);        
+//     });
+// }
 
 app.listen(3000);
