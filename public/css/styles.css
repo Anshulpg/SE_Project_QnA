@@ -38,3 +38,9 @@ body{
 .add_question{
     margin-bottom: 1%;
 }
+.commDiv{
+    display: none;
+}
+.comment-show{
+    margin: 2%;
+}

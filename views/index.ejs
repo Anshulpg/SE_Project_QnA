@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IITJ Forum & Help</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="mainContent">
@@ -26,11 +27,13 @@
                 <button type="submit" value="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" name="submitComment">Add</button>
                 </div>
             </form>
+            <button id="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" class="comment-show">Comments</button>
+            <div class="<%= question[question.length-i-1-(pageNum-1)*100]._id %> commDiv" >
             <% for(var j=0;j<question[question.length-i-1-(pageNum-1)*100].comments.length;j++){ %>
                 <p class="comment"> <%= question[question.length-i-1-(pageNum-1)*100].comments[question[question.length-i-1-(pageNum-1)*100].comments.length-j-1].commentText %> </p>
                 <hr width="70%">
             <%}%>
-            
+            </div>
         <% } %>
         <form action="/1" method="get" class="page-number-button"><button>1</button></form>
         <form action="/2" method="get" class="page-number-button"><button>2</button></form>
@@ -38,5 +41,6 @@
         <form action="/4" method="get" class="page-number-button"><button>4</button></form>
         <form action="/5" method="get" class="page-number-button"><button>5</button></form>
     </div>
+    <script src="javascript/script.js"></script>
 </body>
 </html>
