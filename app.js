@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require("passport");
 const { ensureAuthenticated } = require('./config/auth');
+const { on } = require("./models/User");
 
 const app=express();
 
@@ -53,7 +54,8 @@ mongoose.connect('mongodb://localhost:27017/questionsDB', {useNewUrlParser: true
 /*************add user in schema after login */
 const schemaQuestion= new mongoose.Schema({
     questionText: String,
-    comments:[{commentText:String}]
+    userWithQuestion:String,
+    comments:[{commentText:String,userName:String}]
 
 })
 const questions = mongoose.model('Question',schemaQuestion);
@@ -86,12 +88,19 @@ for (let i = 1; i < 6; i++) {
 }
 app.post("/",function (req,res) {
     var newQues=req.body.newQues;
-    var q1 = new questions({questionText:newQues})
+    var asAnonymous = req.body.asAnonymous;
+    if (asAnonymous=="on") {
+    var userNameHere="Anonymous"
+    }
+    else{
+        userNameHere=req.user.name
+    }
+    var q1 = new questions({questionText:newQues,userWithQuestion:userNameHere})
     questions.insertMany([q1],function (err) {
         if(err){console.log(err);}
-        
+        else{ res.redirect('/1');}
     });
-   res.redirect('/1');
+  
 })
 
 app.post("/comment",function (req,res){
@@ -99,7 +108,7 @@ app.post("/comment",function (req,res){
     var quesID=req.body.submitComment;
     questions.findOneAndUpdate(
         {_id:quesID},
-        {$push : {comments:{commentText:newComment}}},
+        {$push : {comments:{commentText:newComment,userName:req.user.name}}},
         function (e,s) {
             if(e){console.log(e);}
             else{res.redirect('/1');}
@@ -109,10 +118,10 @@ app.post("/comment",function (req,res){
     
 })
 //////////////******************  only uncomment to add elements in databse for testing  *********** */
-// for (let i = 300; i < 701; i++) {
-//     var aaa=new questions({questionText:i});
+// for (let i = 300; i < 601; i++) {
+//     var aaa=new questions({questionText:i,userWithQuestion:"Temporary User"});
 //     questions.insertMany([aaa],function (err) {
-//         console.log(err);        
+//         if(err){console.log(err)};        
 //     });
 // }
 
