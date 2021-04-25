@@ -55,6 +55,7 @@ mongoose.connect('mongodb://localhost:27017/questionsDB', {useNewUrlParser: true
 const schemaQuestion= new mongoose.Schema({
     questionText: String,
     userWithQuestion:String,
+    realUserWithQuestion:String,
     comments:[{commentText:String,userName:String}]
 
 })
@@ -95,7 +96,7 @@ app.post("/",function (req,res) {
     else{
         userNameHere=req.user.name
     }
-    var q1 = new questions({questionText:newQues,userWithQuestion:userNameHere})
+    var q1 = new questions({questionText:newQues,userWithQuestion:userNameHere,realUserWithQuestion:req.user.email})
     questions.insertMany([q1],function (err) {
         if(err){console.log(err);}
         else{ res.redirect('/1');}
