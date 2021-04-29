@@ -8,20 +8,22 @@ const OAuth2 = google.auth.OAuth2;
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "jwtactive987";
 const JWT_RESET_KEY = "jwtreset987";
+
+const { ensureNotAuthenticated } = require('../config/notAuth.js');
 //User Model
 const User = require('../models/User');
 
 //Login Page
-router.get('/login', function(req,res){
+router.get('/login',ensureNotAuthenticated ,function(req,res){
     res.render("login");
 })
 
 //Register Page
-router.get('/register', function(req,res){
+router.get('/register',ensureNotAuthenticated ,function(req,res){
     res.render("register");
 })
 
-router.get('/forgot',function (req,res){
+router.get('/forgot',ensureNotAuthenticated,function (req,res){
     res.render("forgot");
 })
 
@@ -271,9 +273,6 @@ router.post('/reset/:id', function (req,res) {
     }
 });
 
-router.get('/forgot', function (req,res) {
-    res.render('forgot');    
-})
 
 router.get('/forgot/:token', function (req,res) {
     const { token } = req.params;
