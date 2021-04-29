@@ -45,7 +45,7 @@ app.use(function(req,res,next){
 })
 
 //Routes
-app.use("/home",require('./routes/index'));
+
 app.use("/users", require('./routes/users'));
 
 mongoose.connect('mongodb://localhost:27017/questionsDB', {useNewUrlParser: true, useUnifiedTopology: true});

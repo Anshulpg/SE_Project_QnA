@@ -32,7 +32,7 @@
             <div class="mainContent">
                 <div class="wholeAddQuestion">
                     <form action="/" method="post">
-                        <input class="add_question" type="text" placeholder="What's in your mind?" name="newQues" required autocomplete="off">
+                        <textarea class="add_question" type="text" rows="5"   placeholder="What's in your mind?" name="newQues" required autocomplete="off"></textarea>
                         <button type="submit">Post</button>
                         <label for="quesAdding">Post as anonymous?</label>
                             <input type="checkbox" name="asAnonymous" id="quesAdding">
@@ -50,7 +50,7 @@
                 
                     <form action="/comment" method="post">
                         <div>
-                        <input type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off">
+                        <textarea type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off"></textarea>
                         <button type="submit" value="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" name="submitComment">Add</button>
                         
                         </div>
