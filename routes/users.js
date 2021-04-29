@@ -198,7 +198,7 @@ router.get('/activate/:token',function (req,res) {
 //Login Handle
 router.post('/login',function(req,res, next){
     passport.authenticate('local',{
-        successRedirect : '/',
+        successRedirect : '/1',
         failureRedirect : '/users/login',
         failureFlash : true
     }) (req,res,next);
