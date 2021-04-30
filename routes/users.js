@@ -51,7 +51,12 @@ router.post('/register', function(req,res){
     if (password.length < 6){
         errors.push({msg : 'Password must be at least 6 characters'});
     }
-
+    nemail=email.trim()
+    var endEmail="@iitj.ac.in"
+    // xyz@iitj.ac.in
+    if(nemail.slice(-11)!=endEmail){
+        errors.push({msg : 'This is not an IITJ email'});
+    }
     if (errors.length > 0){
         res.render('register', {
             errors,
@@ -62,7 +67,7 @@ router.post('/register', function(req,res){
         });
     }else{
         //Validation passed
-        User.findOne({email : email})
+        User.findOne({email : nemail})
             .then(function(user){
                 if (user){
                     //User exists
@@ -87,7 +92,7 @@ router.post('/register', function(req,res){
                     });
                     const accessToken = oauth2Client.getAccessToken()
     
-                    const token = jwt.sign({ name, email, password }, JWT_KEY, { expiresIn: '30m' });
+                    const token = jwt.sign({ name, nemail, password }, JWT_KEY, { expiresIn: '30m' });
                     const CLIENT_URL = 'http://' + req.headers.host;
     
                     const output = `
@@ -111,7 +116,7 @@ router.post('/register', function(req,res){
                     // send mail with defined transport object
                     const mailOptions = {
                         from: '"Auth Admin" <iitjforumhelp@gmail.com>', // sender address
-                        to: email, // list of receivers
+                        to: nemail, // list of receivers
                         subject: "Account Verification: NodeJS Auth ✔", // Subject line
                         generateTextFromHTML: true,
                         html: output, // html body
