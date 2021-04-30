@@ -82,8 +82,14 @@
                   <li><a class="nav-link scrollto" href="#about">About</a></li>
                   <li><a class="nav-link scrollto" href="#team">Team</a></li>
                   <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                  <% if(t==1){ %>
+                    <li><a class="getstarted scrollto" href="/1">Questions</a></li>
+                    <li><a class="getstarted scrollto" href="/users/logout">Logout</a></li>
+                  <%}%>
+                  <% if(t==0){ %>
                 <li><a class="getstarted scrollto" href="/users/register">Register</a></li>
                 <li><a class="getstarted scrollto" href="/users/login">Login</a></li>
+                <%}%>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
