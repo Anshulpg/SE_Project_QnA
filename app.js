@@ -18,7 +18,7 @@ require('./config/passport')(passport);
 const User = require('./models/User');
 
 //EJS
-app.use(expressLayouts);
+//app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 app.use(express.static("public")); 
@@ -72,9 +72,9 @@ function min(a,b) {
 }
 
 
-app.get("/",ensureAuthenticated ,function (req,res) {
-    res.render("home.ejs",{
-        name : req.user.name
+app.get("/",function (req,res) {
+    res.render("home_page.ejs",{
+        // name : req.user.name
     });
 })
 for (let i = 1; i < 6; i++) {
@@ -105,6 +105,8 @@ app.post("/",function (req,res) {
     });
   
 })
+
+
 
 app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
