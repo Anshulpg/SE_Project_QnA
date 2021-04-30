@@ -64,6 +64,14 @@ const schemaQuestion= new mongoose.Schema({
 const questions = mongoose.model('Question',schemaQuestion);
 
 
+const schemaFeedback = new mongoose.Schema({
+    name:String,
+    email:String,
+    subject:String,
+    message:String
+})
+const feedback = mongoose.model('Feedback',schemaFeedback);
+
 function min(a,b) {
     if (a<b){
         return a;
@@ -155,6 +163,19 @@ app.get("/users/my-questions/:token",ensureAuthenticated,function (req,res) {
     })
 })
 
+app.post('/home/contact',function (req,res) {
+    var name = req.body.name;
+    var email = req.body.email;
+    var subject = req.body.subject;
+    var message = req.body.message;
 
+    var feed1 = new feedback({name:name,email:email,subject:subject,message:message});
+
+    feedback.insertMany([feed1],function (err) {
+        if(err){console.log(err);}
+        else{ res.redirect('/');}
+    });
+
+})
 
 app.listen(3000);
