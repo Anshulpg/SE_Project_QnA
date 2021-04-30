@@ -45,7 +45,7 @@ app.use(function(req,res,next){
 })
 
 //Routes
-app.use("/home",require('./routes/index'));
+
 app.use("/users", require('./routes/users'));
 
 mongoose.connect('mongodb://localhost:27017/questionsDB', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -80,7 +80,7 @@ for (let i = 1; i < 6; i++) {
     app.get("/"+String(i),ensureAuthenticated,function (req,res) {
         questions.find({},function (err,questionsUploaded) {
             if(questionsUploaded.length-(i-1)*100>0){
-            res.render("index.ejs",{question:questionsUploaded.slice(-550,),pageNumber:i,pageNum:i,numberOfQues:min(questionsUploaded.length-(i-1)*100,100)});
+            res.render("index.ejs",{question:questionsUploaded.slice(-550,),pageNumber:i,pageNum:i,numberOfQues:min(questionsUploaded.length-(i-1)*100,100),user:req.user.name});
             }
             else{res.render("noQues.ejs")}
         })

@@ -1,3 +1,5 @@
+//1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8
+
 const express = require('express');
 const router =express.Router();
 const bcrypt = require('bcryptjs');
@@ -8,19 +10,28 @@ const OAuth2 = google.auth.OAuth2;
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "jwtactive987";
 const JWT_RESET_KEY = "jwtreset987";
+
+const { ensureNotAuthenticated } = require('../config/notAuth.js');
 //User Model
 const User = require('../models/User');
 
 //Login Page
-router.get('/login', function(req,res){
+router.get('/login',ensureNotAuthenticated ,function(req,res){
     res.render("login");
 })
 
 //Register Page
-router.get('/register', function(req,res){
+router.get('/register',ensureNotAuthenticated ,function(req,res){
     res.render("register");
 })
 
+router.get('/forgot',ensureNotAuthenticated,function (req,res){
+    res.render("forgot");
+})
+
+router.get('/reset/:id', (req, res) => {
+    res.render('reset', { id: req.params.id })
+});
 //Register Handle
 router.post('/register', function(req,res){
     const {name, email, password, password2} = req.body;
@@ -40,7 +51,12 @@ router.post('/register', function(req,res){
     if (password.length < 6){
         errors.push({msg : 'Password must be at least 6 characters'});
     }
-
+    nemail=email.trim()
+    var endEmail="@iitj.ac.in"
+    // xyz@iitj.ac.in
+    if(nemail.slice(-11)!=endEmail){
+        errors.push({msg : 'This is not an IITJ email'});
+    }
     if (errors.length > 0){
         res.render('register', {
             errors,
@@ -51,7 +67,7 @@ router.post('/register', function(req,res){
         });
     }else{
         //Validation passed
-        User.findOne({email : email})
+        User.findOne({email : nemail})
             .then(function(user){
                 if (user){
                     //User exists
@@ -66,17 +82,17 @@ router.post('/register', function(req,res){
                 }else{
                     
                     const oauth2Client = new OAuth2(
-                        "173872994719-pvsnau5mbj47h0c6ea6ojrl7gjqq1908.apps.googleusercontent.com", // ClientID
-                        "OKXIYR14wBB_zumf30EC__iJ", // Client Secret
+                        "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com", // ClientID
+                        "_MI73ojAvQr2EQavt5bsR7Zk", // Client Secret
                         "https://developers.google.com/oauthplayground" // Redirect URL
                     );
     
                     oauth2Client.setCredentials({
-                        refresh_token: "1//04T_nqlj9UVrVCgYIARAAGAQSNwF-L9IrGm-NOdEKBOakzMn1cbbCHgg2ivkad3Q_hMyBkSQen0b5ABfR8kPR18aOoqhRrSlPm9w"
+                        refresh_token: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8"
                     });
                     const accessToken = oauth2Client.getAccessToken()
     
-                    const token = jwt.sign({ name, email, password }, JWT_KEY, { expiresIn: '30m' });
+                    const token = jwt.sign({ name, nemail, password }, JWT_KEY, { expiresIn: '30m' });
                     const CLIENT_URL = 'http://' + req.headers.host;
     
                     const output = `
@@ -89,18 +105,18 @@ router.post('/register', function(req,res){
                         service: 'gmail',
                         auth: {
                             type: "OAuth2",
-                            user: "goyal.14@iitj.ac.in",
-                            clientId: "386662144086-pp8ac9jge3ieuvimirb9gpa2geum3jdk.apps.googleusercontent.com",
-                            clientSecret: "4gxjOQtYQUPGqD6cBqjuS21R",
-                            refreshToken: "1//04xL2BS5YkGegCgYIARAAGAQSNwF-L9IrEyOnv5l8AncZxHUEgqreBgN27NXQkrPiCJNHfDIFy9-XYVu7gh_1C2EopUKxBJ-1A0Y",
+                            user: "iitjforumhelp@gmail.com",
+                            clientId: "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com",
+                            clientSecret: "_MI73ojAvQr2EQavt5bsR7Zk",
+                            refreshToken: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8",
                             accessToken: accessToken
                         },
                     });
     
                     // send mail with defined transport object
                     const mailOptions = {
-                        from: '"Auth Admin" <goyal.14@iitj.ac.in>', // sender address
-                        to: email, // list of receivers
+                        from: '"Auth Admin" <iitjforumhelp@gmail.com>', // sender address
+                        to: nemail, // list of receivers
                         subject: "Account Verification: NodeJS Auth ✔", // Subject line
                         generateTextFromHTML: true,
                         html: output, // html body
@@ -123,35 +139,7 @@ router.post('/register', function(req,res){
                             );
                             res.redirect('/users/login');
                         }
-                    })  
-
-                    //******************************************************************* */
-
-                    // const newUser = new User({
-                    //     name,
-                    //     email,
-                    //     password
-                    // });
-                    
-                    // //Hash password
-                    // bcrypt.genSalt(10, function(err, salt){
-                    //     bcrypt.hash(newUser.password, salt, function(err, hash){
-                    //         if (err) throw (err);
-
-                    //         //Set password as hashed
-                    //         newUser.password = hash;
-                    //         //Save user
-                    //         newUser.save()
-                    //             .then(function(user){
-                    //                 req.flash('success_msg', 'You are now registered and can log in');
-                    //                 res.redirect('/users/login');
-                    //             })
-                    //             .catch(function(err){
-                    //                 console.log(err);
-                    //             });
-                    //     })
-                    // })
-                    /********************************************* */
+                    })                  
                 };
             });
     }
@@ -215,7 +203,7 @@ router.get('/activate/:token',function (req,res) {
 //Login Handle
 router.post('/login',function(req,res, next){
     passport.authenticate('local',{
-        successRedirect : '/',
+        successRedirect : '/1',
         failureRedirect : '/users/login',
         failureFlash : true
     }) (req,res,next);
@@ -227,5 +215,203 @@ router.get('/logout', function(req, res){
     req.flash('success_msg', 'You are logged out');
     res.redirect('/users/login');
 })
+
+router.post('/reset/:id', function (req,res) {
+    {
+        var { password, password2 } = req.body;
+        const id = req.params.id;
+        let errors = [];
+    
+        //------------ Checking required fields ------------//
+        if (!password || !password2) {
+            req.flash(
+                'error_msg',
+                'Please enter all fields.'
+            );
+            res.redirect(`/users/reset/${id}`);
+        }
+    
+        //------------ Checking password length ------------//
+        else if (password.length < 6) {
+            req.flash(
+                'error_msg',
+                'Password must be at least 8 characters.'
+            );
+            res.redirect(`/users/reset/${id}`);
+        }
+    
+        //------------ Checking password mismatch ------------//
+        else if (password != password2) {
+            req.flash(
+                'error_msg',
+                'Passwords do not match.'
+            );
+            res.redirect(`/users/reset/${id}`);
+        }
+    
+        else {
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) throw err;
+                    password = hash;
+    
+                    User.findByIdAndUpdate(
+                        { _id: id },
+                        { password },
+                        function (err, result) {
+                            if (err) {
+                                req.flash(
+                                    'error_msg',
+                                    'Error resetting password!'
+                                );
+                                res.redirect(`/auth/reset/${id}`);
+                            } else {
+                                req.flash(
+                                    'success_msg',
+                                    'Password reset successfully!'
+                                );
+                                res.redirect('/users/login');
+                            }
+                        }
+                    );
+                });
+            });
+        }   
+    }
+});
+
+
+router.get('/forgot/:token', function (req,res) {
+    const { token } = req.params;
+
+    if (token) {
+        jwt.verify(token, JWT_RESET_KEY, (err, decodedToken) => {
+            if (err) {
+                req.flash(
+                    'error_msg',
+                    'Incorrect or expired link! Please try again.'
+                );
+                res.redirect('/users/login');
+            }
+            else {
+                const { _id } = decodedToken;
+                User.findById(_id, (err, user) => {
+                    if (err) {
+                        req.flash(
+                            'error_msg',
+                            'User with email ID does not exist! Please try again.'
+                        );
+                        res.redirect('/users/login');
+                    }
+                    else {
+                        res.redirect(`/users/reset/${_id}`)
+                    }
+                })
+            }
+        })
+    }
+    else {
+        console.log("Password reset error!")
+    }
+});
+
+router.post('/forgot',function (req,res) {
+    const { email } = req.body;
+
+    let errors = [];
+
+    //------------ Checking required fields ------------//
+    if (!email) {
+        errors.push({ msg: 'Please enter an email ID' });
+    }
+
+    if (errors.length > 0) {
+        res.render('forgot', {
+            errors,
+            email
+        });
+    } else {
+        User.findOne({ email: email }).then(user => {
+            if (!user) {
+                //------------ User dosent exists ------------//
+                errors.push({ msg: 'User with Email ID does not exist!' });
+                res.render('forgot', {
+                    errors,
+                    email
+                });
+            } else {
+
+                const oauth2Client = new OAuth2(
+                    "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com", // ClientID
+                    "_MI73ojAvQr2EQavt5bsR7Zk", // Client Secret
+                    "https://developers.google.com/oauthplayground" // Redirect URL
+                );
+
+                oauth2Client.setCredentials({
+                    refresh_token: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8"
+                });
+                const accessToken = oauth2Client.getAccessToken()
+
+                const token = jwt.sign({ _id: user._id }, JWT_RESET_KEY, { expiresIn: '30m' });
+                const CLIENT_URL = 'http://' + req.headers.host;
+                const output = `
+                <h2>Please click on below link to reset your account password</h2>
+                <p>${CLIENT_URL}/users/forgot/${token}</p>
+                <p><b>NOTE: </b> The activation link expires in 30 minutes.</p>
+                `;
+
+                User.updateOne({ resetLink: token }, (err, success) => {
+                    if (err) {
+                        errors.push({ msg: 'Error resetting password!' });
+                        res.render('forgot', {
+                            errors,
+                            email
+                        });
+                    }
+                    else {
+                        const transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            auth: {
+                                type: "OAuth2",
+                                user: "iitjforumhelp@gmail.com",
+                                clientId: "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com",
+                                clientSecret: "_MI73ojAvQr2EQavt5bsR7Zk",
+                                refreshToken: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8",
+                                accessToken: accessToken
+                            },
+                        });
+
+                        // send mail with defined transport object
+                        const mailOptions = {
+                            from: '"Auth Admin" <iitjforumhelp@gmail.com>', // sender address
+                            to: email, // list of receivers
+                            subject: "Account Password Reset: NodeJS Auth ✔", // Subject line
+                            html: output, // html body
+                        };
+
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                console.log(error);
+                                req.flash(
+                                    'error_msg',
+                                    'Something went wrong on our end. Please try again later.'
+                                );
+                                res.redirect('/users/forgot');
+                            }
+                            else {
+                                console.log('Mail sent : %s', info.response);
+                                req.flash(
+                                    'success_msg',
+                                    'Password reset link sent to email ID. Please follow the instructions.'
+                                );
+                                res.redirect('/users/login');
+                            }
+                        })
+                    }
+                })
+            }
+        });
+    }
+});
 
 module.exports = router;

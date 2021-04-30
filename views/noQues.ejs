@@ -12,8 +12,10 @@
     <a href="/">Visit home page</a>
     <h3>Or add a question</h3>
     <form action="/" method="post">
-        <input class="add_question" type="text" placeholder="What's in your mind" name="newQues" required autocomplete="off">
-        <button type="submit">Submit</button>
+        <textarea class="add_question" type="text" rows="5"   placeholder="What's in your mind?" name="newQues" required autocomplete="off"></textarea>
+        <button type="submit">Post</button>
+        <label for="quesAdding">Post as anonymous?</label>
+            <input type="checkbox" name="asAnonymous" id="quesAdding">
     </form>
     <form action="/1" method="get" class="page-number-button"><button>1</button></form>
         <form action="/2" method="get" class="page-number-button"><button>2</button></form>
