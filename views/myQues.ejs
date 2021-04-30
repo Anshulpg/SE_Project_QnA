@@ -1,0 +1,36 @@
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<h2>Hi <%= user %></h2>
+<h3>Your Questions are :</h3>
+<% if(question.length==0) {%>
+    <h2>No Questions posted by you till now</h2>
+<%}%>
+<% for(var i=0 ; i<question.length;i++){ %>
+
+    <div class="singleQuestion">
+        <p class="userQuestion"><%= question[question.length-i-1].userWithQuestion %></p>
+        <p class="question"> <%= question[question.length-i-1].questionText %> </p>
+    
+        <form action="/comment" method="post">
+            <div>
+            <textarea type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off"></textarea>
+            <button type="submit" value="<%= question[question.length-i-1]._id %>" name="submitComment">Add</button>
+            
+            </div>
+        </form>
+
+        <button id="<%= question[question.length-i-1]._id %>" class="comment-show">Comments (<%= question[question.length-i-1].comments.length %>)</button>
+        <div class="<%= question[question.length-i-1]._id %> commDiv" >
+        <% for(var j=0;j<question[question.length-i-1].comments.length;j++){ %>
+            <div class="singleComment">
+                <p class="userComment"> <%= question[question.length-i-1].comments[question[question.length-i-1].comments.length-j-1].userName %></p>
+                <p class="comment"> <%= question[question.length-i-1].comments[question[question.length-i-1].comments.length-j-1].commentText %> </p>
+                <hr width="70%">
+            </div>
+        <%}%>
+        </div>
+    </div>
+
+<%}%>

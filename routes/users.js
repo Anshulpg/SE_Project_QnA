@@ -1,5 +1,3 @@
-//1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8
-
 const express = require('express');
 const router =express.Router();
 const bcrypt = require('bcryptjs');
@@ -14,6 +12,8 @@ const JWT_RESET_KEY = "jwtreset987";
 const { ensureNotAuthenticated } = require('../config/notAuth.js');
 //User Model
 const User = require('../models/User');
+const { ensureAuthenticated } = require('../config/auth.js');
+const { Mongoose } = require('mongoose');
 
 //Login Page
 router.get('/login',ensureNotAuthenticated ,function(req,res){
@@ -34,7 +34,7 @@ router.get('/reset/:id', (req, res) => {
 });
 //Register Handle
 router.post('/register', function(req,res){
-    const {name, email, password, password2} = req.body;
+    var {name, email, password, password2} = req.body;
     let errors = [];
 
     //Check required fields
@@ -51,10 +51,10 @@ router.post('/register', function(req,res){
     if (password.length < 6){
         errors.push({msg : 'Password must be at least 6 characters'});
     }
-    nemail=email.trim()
+    email=email.trim()
     var endEmail="@iitj.ac.in"
     // xyz@iitj.ac.in
-    if(nemail.slice(-11)!=endEmail){
+    if(email.slice(-11)!=endEmail){
         errors.push({msg : 'This is not an IITJ email'});
     }
     if (errors.length > 0){
@@ -67,7 +67,7 @@ router.post('/register', function(req,res){
         });
     }else{
         //Validation passed
-        User.findOne({email : nemail})
+        User.findOne({email : email})
             .then(function(user){
                 if (user){
                     //User exists
@@ -92,7 +92,7 @@ router.post('/register', function(req,res){
                     });
                     const accessToken = oauth2Client.getAccessToken()
     
-                    const token = jwt.sign({ name, nemail, password }, JWT_KEY, { expiresIn: '30m' });
+                    const token = jwt.sign({ name, email, password }, JWT_KEY, { expiresIn: '30m' });
                     const CLIENT_URL = 'http://' + req.headers.host;
     
                     const output = `
@@ -116,7 +116,7 @@ router.post('/register', function(req,res){
                     // send mail with defined transport object
                     const mailOptions = {
                         from: '"Auth Admin" <iitjforumhelp@gmail.com>', // sender address
-                        to: nemail, // list of receivers
+                        to: email, // list of receivers
                         subject: "Account Verification: NodeJS Auth ✔", // Subject line
                         generateTextFromHTML: true,
                         html: output, // html body
@@ -413,5 +413,33 @@ router.post('/forgot',function (req,res) {
         });
     }
 });
+
+
+// router.get("/my-questions/:token",ensureAuthenticated,function name(req,res) {
+//     const {token} = req.params;
+//     User.findOne({email:token},function (err,user) {
+//         if(err){res.redirect('/users/login')}
+//         if(!user){
+//             res.redirect('/users/login');
+//         }
+//         else{
+//             if(user.email==req.user.email){
+//                 Mongoose.Model('questions').find({email:user.email},function (err,questionsUploaded) {
+//                     if(err){res.redirect('/1')};
+//                     console.log(questionsUploaded);
+//                     if(!questionsUploaded){questionsUploaded=[]}
+//                     res.render("myQues.ejs",{question:questionsUploaded,user:req.user.name});
+                    
+                    
+//                 })
+//             }
+//             res.redirect('/1');
+//         }        
+//     })
+
+// })
+    
+
+
 
 module.exports = router;
