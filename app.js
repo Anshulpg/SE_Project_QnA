@@ -81,8 +81,12 @@ function min(a,b) {
 
 
 app.get("/",function (req,res) {
+    var t=0
+    if(req.isAuthenticated()){
+        t=1;
+    }
     res.render("home_page.ejs",{
-        // name : req.user.name
+        t:t
     });
 })
 for (let i = 1; i < 6; i++) {
