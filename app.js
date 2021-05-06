@@ -58,7 +58,8 @@ const schemaQuestion= new mongoose.Schema({
     questionText: String,
     userWithQuestion:String,
     realUserWithQuestion:String,
-    comments:[{commentText:String,userName:String}]
+    comments:[{commentText:String,userName:String,commentDate : String}],
+    date : String
 
 })
 const questions = mongoose.model('Question',schemaQuestion);
@@ -96,7 +97,7 @@ for (let i = 1; i < 6; i++) {
             if(questionsUploaded.length-(i-1)*100>0){
             res.render("index.ejs",{question:questionsUploaded.slice(-550,),pageNumber:i,pageNum:i,userEmail:req.user.email,numberOfQues:min(questionsUploaded.length-(i-1)*100,100),user:req.user.name});
             }
-            else{res.render("noQues.ejs")}
+            else{res.render("noQues.ejs",{userEmail:req.user.email})}
         })
         
 })
@@ -110,7 +111,23 @@ app.post("/",function (req,res) {
     else{
         userNameHere=req.user.name
     }
-    var q1 = new questions({questionText:newQues,userWithQuestion:userNameHere,realUserWithQuestion:req.user.email});
+    var currentdate = new Date(); 
+                var datetime =  currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes();
+    var d = currentdate.toLocaleString();
+    let today=new Date();
+    let options={
+        year:"numeric",
+        day:"numeric",
+        month:"long"
+    };
+    let minute={ hour: '2-digit', minute: '2-digit' };
+    let timeof = today.toLocaleTimeString("en-us",minute);
+    let day=today.toLocaleDateString("en-us",options);
+    var q1 = new questions({questionText:newQues,userWithQuestion:userNameHere,realUserWithQuestion:req.user.email,date:day+" "+timeof});
     questions.insertMany([q1],function (err) {
         if(err){console.log(err);}
         else{ res.redirect('/1');}
@@ -123,9 +140,24 @@ app.post("/",function (req,res) {
 app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
     var quesID=req.body.submitComment;
+    var currentdate = new Date(); 
+                var datetime =  currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes();
+    let today=new Date();
+    let options={
+        year:"numeric",
+        day:"numeric",
+        month:"long"
+    };
+    let minute={ hour: '2-digit', minute: '2-digit' };
+    let timeof = today.toLocaleTimeString("en-us",minute);
+    let day=today.toLocaleDateString("en-us",options);
     questions.findOneAndUpdate(
         {_id:quesID},
-        {$push : {comments:{commentText:newComment,userName:req.user.name}}},
+        {$push : {comments:{commentText:newComment,userName:req.user.name,commentDate:day+" "+timeof}}},
         function (e,s) {
             if(e){console.log(e);}
             else{res.redirect('/1');}
@@ -157,7 +189,7 @@ app.get("/users/my-questions/:token",ensureAuthenticated,function (req,res) {
                 questions.find({realUserWithQuestion:user.email},function (err,questionsUploaded) {
                     if(err){console.log(err)};
                     //console.log(questionsUploaded);
-                    res.render("myQues.ejs",{question:questionsUploaded,user:req.user.name});
+                    res.render("myQues.ejs",{question:questionsUploaded,user:req.user.name, userEmail:req.user.email});
                     
                     
                 })

@@ -10,24 +10,65 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- <link href="css/assets/boxicons/css/boxicons.min.css" rel="stylesheet"> -->
+    <link href="css/assets/aos/aos.css" rel="stylesheet">
+    <link href="css/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/assets/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="css/assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ 
+
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
 </head>
 <body>
+
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container">
+      <div class="header-container d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <h1 class="text-light"><a href=""><span>IITJ Forum & Help</span></a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+              <li><a class="nav-link scrollto active" href="/#hero">Home</a></li>
+              <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
+              <li><a class="getstarted scrollto" href="/users/my-questions/<%= userEmail %>"><img src="/images/profile.ico" width="23px" height="20px">Profile</a></li>
+              <li><a class="getstarted scrollto" href="/users/logout"><img src="/images/logout.ico" width="18px" height="18px" >Logout</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+      </div>
+    </div>
+</header>
+
+
+
   <div class="top">
-    <div class="Title">
+    <!-- <div class="Title">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
               <h1 class="display-4">IITJ Forum</h1>
               <p class="lead">Where every query meets an answerer.</p>
             </div>
           </div>
-    </div>
-    <p>Hi, <%= user %></p>
-    <a href="/users/logout" class="btn btn-secondary logout">Logout</a>
-    <a href="/users/my-questions/<%= userEmail %>" class="btn btn-primary">My Questions</a>
+    </div> -->
+    <h3>Hi, <%= user %></h3>
+    <!-- <a href="/users/logout" class="btn btn-secondary logout">Logout</a>
+    <a href="/users/my-questions/<%= userEmail %>" class="btn btn-primary">My Questions</a> -->
   </div>
     <div class="container">
         <div class="row">
@@ -39,35 +80,38 @@
           <div class="col-10">
             <div class="mainContent">
                 <div class="wholeAddQuestion">
+                  <h4>Add your question here ✅</h4>
                     <form action="/" method="post">
-                        <textarea class="add_question" type="text" rows="5"   placeholder="What's in your mind?" name="newQues" required autocomplete="off"></textarea>
-                        <button type="submit">Post</button>
-                        <label for="quesAdding">Post as anonymous?</label>
-                            <input type="checkbox" name="asAnonymous" id="quesAdding">
+                      <div class="row">
+                      <div class="col-8"><textarea class="add_question" type="text" rows="4"   placeholder="What's on your mind?" name="newQues" required autocomplete="off"></textarea></div>
+                      <div class="col-sm"><button type="submit" class="btn btn-light">Post</button></div>
+                      <div class="col-3"><input type="checkbox" name="asAnonymous" id="quesAdding"><label for="quesAdding"> Post as anonymous?</label>
+                            </div>
+                          
+                      </div>
                     </form>
                 </div>
-                <form action="/1" method="get" class="page-number-button"><button>1</button></form>
-                <form action="/2" method="get" class="page-number-button"><button>2</button></form>
-                <form action="/3" method="get" class="page-number-button"><button>3</button></form>
-                <form action="/4" method="get" class="page-number-button"><button>4</button></form>
-                <form action="/5" method="get" class="page-number-button"><button>5</button></form>
+                <form action="/1" method="get" class="page-number-button"><button class="orient">1</button></form>
+                <form action="/2" method="get" class="page-number-button"><button class="orient">2</button></form>
+                <form action="/3" method="get" class="page-number-button"><button class="orient">3</button></form>
+                <form action="/4" method="get" class="page-number-button"><button class="orient">4</button></form>
+                <form action="/5" method="get" class="page-number-button"><button class="orient">5</button></form>
                 <% for(var i =0 ; i< numberOfQues ; i++) { %>
                 <div class="singleQuestion">
-                    <p class="userQuestion"><%= question[question.length-i-1-(pageNum-1)*100].userWithQuestion %></p>
+                    <p class="userQuestion"><%= question[question.length-i-1-(pageNum-1)*100].userWithQuestion %> <%= question[question.length-i-1-(pageNum-1)*100].date %> </p>
                     <p class="question"> <%= question[question.length-i-1-(pageNum-1)*100].questionText %> </p>
                 
                     <form action="/comment" method="post">
-                        <div>
-                        <textarea type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off"></textarea>
-                        <button type="submit" value="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" name="submitComment">Add</button>
-                        
+                        <div class="add_comment row">
+                        <div class="col-12"><textarea type="text" name="commentText" required placeholder="Add a comment" autocomplete="off" rows="3" cols="40" ></textarea>
+                        <button type="submit" value="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" name="submitComment" class="btn btn-light">Add</button></div>
                         </div>
                     </form>
-                    <button id="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" class="comment-show">Comments (<%= question[question.length-i-1-(pageNum-1)*100].comments.length %>)</button>
+                    <button id="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" class="comment-show" >Comments (<%= question[question.length-i-1-(pageNum-1)*100].comments.length %>)</button>
                     <div class="<%= question[question.length-i-1-(pageNum-1)*100]._id %> commDiv" >
                     <% for(var j=0;j<question[question.length-i-1-(pageNum-1)*100].comments.length;j++){ %>
                         <div class="singleComment">
-                            <p class="userComment"> <%= question[question.length-i-1-(pageNum-1)*100].comments[question[question.length-i-1-(pageNum-1)*100].comments.length-j-1].userName %></p>
+                            <p class="userComment"> <%= question[question.length-i-1-(pageNum-1)*100].comments[question[question.length-i-1-(pageNum-1)*100].comments.length-j-1].userName %>  <%= question[question.length-i-1-(pageNum-1)*100].comments[question[question.length-i-1-(pageNum-1)*100].comments.length-j-1].commentDate %> </p>
                             <p class="comment"> <%= question[question.length-i-1-(pageNum-1)*100].comments[question[question.length-i-1-(pageNum-1)*100].comments.length-j-1].commentText %> </p>
                             <hr width="70%">
                         </div>
@@ -75,11 +119,11 @@
                     </div>
                 </div>
                 <% } %>
-                <form action="/1" method="get" class="page-number-button"><button>1</button></form>
-                <form action="/2" method="get" class="page-number-button"><button>2</button></form>
-                <form action="/3" method="get" class="page-number-button"><button>3</button></form>
-                <form action="/4" method="get" class="page-number-button"><button>4</button></form>
-                <form action="/5" method="get" class="page-number-button"><button>5</button></form>
+                <form action="/1" method="get" class="page-number-button"><button class="orient">1</button></form>
+                <form action="/2" method="get" class="page-number-button"><button class="orient">2</button></form>
+                <form action="/3" method="get" class="page-number-button"><button class="orient">3</button></form>
+                <form action="/4" method="get" class="page-number-button"><button class="orient">4</button></form>
+                <form action="/5" method="get" class="page-number-button"><button class="orient">5</button></form>
             </div>
           </div>
 
@@ -107,6 +151,10 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="css/assets/aos/aos.js"></script>
+    <script src="css/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="javascript/design.js"></script>
     <script src="javascript/script.js"></script>
 </body>
 </html>
