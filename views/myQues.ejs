@@ -4,31 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+   
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+
+    <link href="css/assets/aos/aos.css" rel="stylesheet">
+    <link href="css/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/assets/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="css/assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>IITJ Forum & Help</title>
 </head>
 <body>
-    <div class="container">
 
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container">
+          <div class="header-container d-flex align-items-center justify-content-between">
+            <div class="logo">
+              <h1 class="text-light"><a href=""><span>IITJ Forum & Help</span></a></h1>
+              <!-- Uncomment below if you prefer to use an image logo -->
+              <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+    
+            <nav id="navbar" class="navbar">
+                <ul>
+                  <li><a class="nav-link scrollto active" href="/#hero">Home</a></li>
+                  <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
+                  <li><a class="getstarted scrollto" href="/1">Questions</a></li>
+                  <li><a class="getstarted scrollto" href="/users/logout"><img src="/images/logout.ico" width="18px" height="18px" >Logout</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+          </div>
+        </div>
+    </header>
+
+
+<br><br><br>
+    <div class="container">
 <h2>Hi <%= user %></h2>
-<h3>Your Questions are :</h3>
+<h3 id="my">Your Questions are :</h3>
 <% if(question.length==0) {%>
     <h2>No Questions posted by you till now</h2>
 <%}%>
 <% for(var i=0 ; i<question.length;i++){ %>
 
     <div class="singleQuestion">
-        <p class="userQuestion"><%= question[question.length-i-1].userWithQuestion %></p>
+        <p class="userQuestion"><%= question[question.length-i-1].userWithQuestion %> <%= question[question.length-i-1].date %> </p>
         <p class="question"> <%= question[question.length-i-1].questionText %> </p>
     
         <form action="/comment" method="post">
-            <div>
-            <textarea type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off"></textarea>
-            <button type="submit" value="<%= question[question.length-i-1]._id %>" name="submitComment">Add</button>
-            
+            <div class="add_comment row">
+              <div class="col-12"><textarea type="text" name="commentText" required  placeholder="Add a comment" autocomplete="off" rows="3" cols="40"></textarea>
+            <button type="submit" value="<%= question[question.length-i-1]._id %>" name="submitComment" id="adjust_rem" class="btn btn-light">Add</button>
+            </div>
             </div>
         </form>
 
@@ -63,6 +98,13 @@
   integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
   crossorigin="anonymous"
 ></script>
+
+<script src="css/assets/aos/aos.js"></script>
+    <script src="css/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
+<script src="javascript/script.js"></script>
 </body>
 </html>
 

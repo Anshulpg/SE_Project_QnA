@@ -6,28 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>No question</title>
     
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+   
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+
+    <link href="css/assets/aos/aos.css" rel="stylesheet">
+    <link href="css/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/assets/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="css/assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ 
     <link rel="stylesheet" href="css/styles.css">
     
 </head>
 <body>
+
+  <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container">
+      <div class="header-container d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <h1 class="text-light"><a href=""><span>IITJ Forum & Help</span></a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+              <li><a class="nav-link scrollto active" href="/#hero">Home</a></li>
+              <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
+              <li><a class="getstarted scrollto" href="/users/my-questions/<%= userEmail %>"><img src="/images/profile.ico" width="23px" height="20px">Profile</a></li>
+              <li><a class="getstarted scrollto" href="/users/logout"><img src="/images/logout.ico" width="18px" height="18px" >Logout</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+      </div>
+    </div>
+</header>
+
+<br><br><br>
+
+
+
+  <div class="container">
     <h1>No question here</h1>
-    <a href="/">Visit home page</a>
-    <h3>Or add a question</h3>
+    <h3>Add your question here ✅</h3>
     <form action="/" method="post">
         <textarea class="add_question" type="text" rows="5"   placeholder="What's in your mind?" name="newQues" required autocomplete="off"></textarea>
-        <button type="submit">Post</button>
+        <button type="submit" id="button_in_noQues" class="btn btn-light">Post</button>
+        <input type="checkbox" name="asAnonymous" id="quesAdding">
         <label for="quesAdding">Post as anonymous?</label>
-            <input type="checkbox" name="asAnonymous" id="quesAdding">
+            
     </form>
-    <form action="/1" method="get" class="page-number-button"><button>1</button></form>
-        <form action="/2" method="get" class="page-number-button"><button>2</button></form>
-        <form action="/3" method="get" class="page-number-button"><button>3</button></form>
-        <form action="/4" method="get" class="page-number-button"><button>4</button></form>
-        <form action="/5" method="get" class="page-number-button"><button>5</button></form>
+        <form action="/1" method="get" class="page-number-button"><button class="orient">1</button></form>
+        <form action="/2" method="get" class="page-number-button"><button class="orient">2</button></form>
+        <form action="/3" method="get" class="page-number-button"><button class="orient">3</button></form>
+        <form action="/4" method="get" class="page-number-button"><button class="orient">4</button></form>
+        <form action="/5" method="get" class="page-number-button"><button class="orient">5</button></form>
 
 
     </div>
@@ -47,5 +82,13 @@
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"
     ></script>
+
+    <script src="css/assets/aos/aos.js"></script>
+    <script src="css/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="javascript/design.js"></script>
+    <script src="javascript/script.js"></script>
+
+
 </body>
 </html>
