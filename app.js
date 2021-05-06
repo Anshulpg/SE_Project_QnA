@@ -140,6 +140,8 @@ app.post("/",function (req,res) {
 app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
     var quesID=req.body.submitComment;
+    var redir = req.headers.referer;
+    console.log(redir);
     var currentdate = new Date(); 
                 var datetime =  currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
@@ -160,7 +162,7 @@ app.post("/comment",function (req,res){
         {$push : {comments:{commentText:newComment,userName:req.user.name,commentDate:day+" "+timeof}}},
         function (e,s) {
             if(e){console.log(e);}
-            else{res.redirect('/1');}
+            else{res.redirect(redir);}
         }
     )
     
