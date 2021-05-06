@@ -88,13 +88,13 @@ router.post('/register', function(req,res){
                     );
     
                     oauth2Client.setCredentials({
-                        refresh_token: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8"
+                        refresh_token: "1//04egSAIPyuptFCgYIARAAGAQSNwF-L9IrvM97fUxHsK3qJC3iD-hJYWZXtTeWN_cOKgxXz7Gucf71E9gJMYZi3hFl0nvhoPzNZM8"
                     });
                     const accessToken = oauth2Client.getAccessToken()
     
                     const token = jwt.sign({ name, email, password }, JWT_KEY, { expiresIn: '30m' });
                     const CLIENT_URL = 'http://' + req.headers.host;
-    
+                    //console.log(token,accessToken);
                     const output = `
                     <h2>Please click on below link to activate your account</h2>
                     <p>${CLIENT_URL}/users/activate/${token}</p>
@@ -108,7 +108,7 @@ router.post('/register', function(req,res){
                             user: "iitjforumhelp@gmail.com",
                             clientId: "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com",
                             clientSecret: "_MI73ojAvQr2EQavt5bsR7Zk",
-                            refreshToken: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8",
+                            refreshToken: "1//04egSAIPyuptFCgYIARAAGAQSNwF-L9IrvM97fUxHsK3qJC3iD-hJYWZXtTeWN_cOKgxXz7Gucf71E9gJMYZi3hFl0nvhoPzNZM8",
                             accessToken: accessToken
                         },
                     });
@@ -135,7 +135,7 @@ router.post('/register', function(req,res){
                             console.log('Mail sent : %s', info.response);
                             req.flash(
                                 'success_msg',
-                                'Activation link sent to email ID. Please activate to log in.'
+                                'Activation link sent to email ID. Please activate to log in. (If you dont see mail , check spam folder)'
                             );
                             res.redirect('/users/login');
                         }
@@ -348,7 +348,7 @@ router.post('/forgot',function (req,res) {
                 );
 
                 oauth2Client.setCredentials({
-                    refresh_token: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8"
+                    refresh_token: "1//04egSAIPyuptFCgYIARAAGAQSNwF-L9IrvM97fUxHsK3qJC3iD-hJYWZXtTeWN_cOKgxXz7Gucf71E9gJMYZi3hFl0nvhoPzNZM8"
                 });
                 const accessToken = oauth2Client.getAccessToken()
 
@@ -376,7 +376,7 @@ router.post('/forgot',function (req,res) {
                                 user: "iitjforumhelp@gmail.com",
                                 clientId: "1041816779848-ehb6ngglc96q5p8hvujd67vpv9d1qh3u.apps.googleusercontent.com",
                                 clientSecret: "_MI73ojAvQr2EQavt5bsR7Zk",
-                                refreshToken: "1//04mLfMU4FJBg_CgYIARAAGAQSNwF-L9Ir2DWRTyBnDQwvoVfpNJXteXk4eGFfIyxWpgojPSq11ktuGa5s8Y0IRipEghfILtAbZJ8",
+                                refreshToken: "1//04egSAIPyuptFCgYIARAAGAQSNwF-L9IrvM97fUxHsK3qJC3iD-hJYWZXtTeWN_cOKgxXz7Gucf71E9gJMYZi3hFl0nvhoPzNZM8",
                                 accessToken: accessToken
                             },
                         });

@@ -563,3 +563,8 @@ p{
     top: 0;
     width: 100%;
   }
+
+  .links{
+    word-wrap: break-word;
+    
+  }
