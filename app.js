@@ -50,7 +50,7 @@ app.use(function(req,res,next){
 
 app.use("/users", require('./routes/users'));
 
-mongoose.connect('mongodb://localhost:27017/questionsDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://auth-Anshul:thisishelp@cluster0.ddz7s.mongodb.net/questionsDB', {useNewUrlParser: true, useUnifiedTopology: true});
 /****************************************************************************************************** */
 
 /*************add user in schema after login */
