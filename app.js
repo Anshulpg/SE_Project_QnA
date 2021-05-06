@@ -141,7 +141,7 @@ app.post("/comment",function (req,res){
     var newComment=req.body.commentText;
     var quesID=req.body.submitComment;
     var redir = req.headers.referer;
-    console.log(redir);
+    //console.log(redir);
     var currentdate = new Date(); 
                 var datetime =  currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
@@ -169,15 +169,29 @@ app.post("/comment",function (req,res){
     
 })
 //////////////******************  only uncomment to add elements in databse for testing  *********** */
-// for (let i = 300; i < 601; i++) {
-//     var aaa=new questions({questionText:i,userWithQuestion:"Temporary User"});
-//     questions.insertMany([aaa],function (err) {
-//         if(err){console.log(err)};        
-//     });
-// }
+for (let i = 300; i < 601; i++) {
+    var aaa=new questions({questionText:i,userWithQuestion:"Temporary User"});
+    questions.insertMany([aaa],function (err) {
+        if(err){console.log(err)};        
+    });
+}
 
 
 /**////////////////////////****************************************** */ */
+
+// for (let i = 300; i < 601; i++) {
+//     var aaa="aaa";
+//     questions.findOneAndUpdate(
+//         {_id:"60941a3e188b1b1d049f333c"},
+//         {$push : {comments:{commentText:aaa}}},
+//         function (e,s) {
+//             if(e){console.log(e);}
+            
+//         }
+//     )
+// }
+
+
 app.get("/users/my-questions/:token",ensureAuthenticated,function (req,res) {
     const {token} = req.params;
     User.findOne({email:token},function (err,user) {

@@ -65,7 +65,7 @@ body{
   /* background: rgb(199, 245, 227); */
   /* background: #b0e9d9; */
   box-shadow: 0px 2px 15px grey;
-  transform: scale(1.05);
+  transform: translate(5px,5px);
   /* background: rgb(242, 242, 242); */
 }
 p{
