@@ -169,12 +169,12 @@ app.post("/comment",function (req,res){
     
 })
 //////////////******************  only uncomment to add elements in databse for testing  *********** */
-for (let i = 300; i < 601; i++) {
-    var aaa=new questions({questionText:i,userWithQuestion:"Temporary User"});
-    questions.insertMany([aaa],function (err) {
-        if(err){console.log(err)};        
-    });
-}
+// for (let i = 300; i < 601; i++) {
+//     var aaa=new questions({questionText:i,userWithQuestion:"Temporary User"});
+//     questions.insertMany([aaa],function (err) {
+//         if(err){console.log(err)};        
+//     });
+// }
 
 
 /**////////////////////////****************************************** */ */
