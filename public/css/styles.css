@@ -10,7 +10,7 @@ body{
 }
 
 .top{
-  margin-top: 6%;
+  margin-top: 10rem;
 }
 
 .add_question{
@@ -246,6 +246,11 @@ p{
 
 .add_comment .col-12{
   padding: 0;
+  width: 100%;
+
+}
+.add_comment .col-12 textarea{
+  width: 60%;
 
 }
 
@@ -566,5 +571,6 @@ p{
 
   .links{
     word-wrap: break-word;
-    
+    margin-top: 5%;
   }
+ 

@@ -72,14 +72,18 @@
   </div>
     <div class="container">
         <div class="row">
-          <div class="col-1 links">
+          <div class="col-md-1 col-2 links">
             <a href="http://14.139.37.243:8080/Aryabhatta_New/">Aryabhatta_New</a>
             <hr>
             <a href="http://14.139.37.243:8080/Aryabhatta/">Aryabhatta_Old</a>
+            <hr>
+            <a href="https://iitj.ac.in/">IITJ</a>
+            <hr>
+            <a href="https://spc.iitj.ac.in/">CDC</a>
           </div>
 
 
-          <div class="col-10">
+          <div class="col-md-10 col-8">
             <div class="mainContent">
                 <div class="wholeAddQuestion">
                   <h4>Add your question here ✅</h4>
@@ -105,7 +109,7 @@
                 
                     <form action="/comment" method="post">
                         <div class="add_comment row">
-                        <div class="col-12"><textarea type="text" name="commentText" required placeholder="Add a comment" autocomplete="off" rows="3" cols="40" ></textarea>
+                        <div class="col-12"><textarea type="text" name="commentText" required placeholder="Add a comment" autocomplete="off" rows="3"  ></textarea>
                         <button type="submit" value="<%= question[question.length-i-1-(pageNum-1)*100]._id %>" name="submitComment" class="btn btn-light">Add</button></div>
                         </div>
                     </form>
@@ -130,8 +134,14 @@
           </div>
 
 
-          <div class="col-1">
-            some other links maybe
+          <div class="col-md-1 col-2 links">
+            <a href="http://swc.iitj.ac.in/">SWC</a>
+            <hr>
+            <a href="https://students.iitj.ac.in/">Gymkhana</a>
+            <hr>
+            <a href="https://devluplabs.ml/#/">DevLupLabs</a>
+            <hr>
+            <a href="https://library.iitj.ac.in/electronic_resourses/index.php?id=remotexs">Library</a>
           </div>
         </div>
       </div>
